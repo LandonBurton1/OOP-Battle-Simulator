@@ -1,7 +1,7 @@
 import random
 from goblin import Goblin
 from hero import Hero
-
+from boss import Sparky
 def main():
     print("Welcome to the Battle Arena!")
     print("༼ ᓄºل͟º ༽ᓄ   ᕦ(ò_óˇ)ᕤ")
@@ -10,24 +10,34 @@ def main():
     hero = Hero("Cheeseburger")
 
     # Create goblins ༼ ºل͟º ༽ ༼ ºل͟º ༽ ༼ ºل͟º ༽
-    goblins = [Goblin(f"Goblin {i+1}") for i in range(3)]
+    goblins = [Goblin(f"Goblin {i+1}", "black") for i in range(3)]
 
     # Keep track of how many goblins were defeated
     defeated_goblins = 0
     total_damage= 0
     rounds= 0
 
+    boss = True
     # Battle Loop 
     while hero.is_alive() and any(goblin.is_alive() for goblin in goblins):
         print("\nNew Round!")
         rounds += 1
-        
+
+        if rounds % 5 ==0 and boss == True:
+            print("A wild Sparky appears! (ง'̀-'́)ง")
+            sparky = Sparky("Sparky")
+            goblins.append(sparky)
+            boss = False
+
+
+
         # Hero's turn to attack
         target_goblin = random.choice([goblin for goblin in goblins if goblin.is_alive()])
         damage = hero.strike()
         total_damage += damage
         print(f"Hero attacks {target_goblin.name} for {damage} damage!")
         target_goblin.take_damage(damage)
+        
 
         # Check if the target goblin was defeated
         if not target_goblin.is_alive():
@@ -51,6 +61,7 @@ def main():
     print(f"\nTotal goblins defeated: {defeated_goblins} / {len(goblins)}")
     print(f"Total rounds: {rounds}")
     print(f"Total damage dealt by hero: {total_damage}")
+    print(f"Heros height: {hero.height} inches")
 
 if __name__ == "__main__":
     main()
