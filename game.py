@@ -20,8 +20,10 @@ def main():
     boss = True
     # Battle Loop 
     while hero.is_alive() and any(goblin.is_alive() for goblin in goblins):
+        NEXT = input("Press Enter to continue...")
         print("\nNew Round!")
         rounds += 1
+
 
         if rounds % 5 ==0 and boss == True:
             print("A wild Sparky appears! (ง'̀-'́)ง")
@@ -42,6 +44,8 @@ def main():
         # Check if the target goblin was defeated
         if not target_goblin.is_alive():
             defeated_goblins += 1
+            if target_goblin.name == "Sparky":
+                print("Boss battle complete, Enemies eliminated   (ง'̀-'́)ง")
             print(f"{target_goblin.name} has been defeated!")
 
         # Goblins' turn to attack
